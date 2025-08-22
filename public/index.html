@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assessment Portal API</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            text-align: center; 
+        }
+        .card { 
+            background: rgba(255,255,255,0.1); 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px 0; 
+        }
+        .endpoint { 
+            background: rgba(255,255,255,0.2); 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+            font-family: monospace; 
+        }
+        a { color: #fff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Assessment Portal API</h1>
+        <div class="card">
+            <h2>Server Status: Online ✅</h2>
+            <p>Version: 1.0.0</p>
+            <p>Environment: Production</p>
+        </div>
+        
+        <div class="card">
+            <h3>📋 API Endpoints</h3>
+            <div class="endpoint">GET /api/users - User management</div>
+            <div class="endpoint">GET /api/questions - Question bank</div>
+            <div class="endpoint">GET /api/assessments - Assessments</div>
+            <div class="endpoint">GET /health - Health check</div>
+        </div>
+        
+        <div class="card">
+            <h3>📚 Documentation</h3>
+            <p><a href="/api-docs">Swagger API Documentation</a></p>
+            <p><a href="/health">Health Check</a></p>
+        </div>
+        
+        <div class="card">
+            <p>Built with ❤️ using Node.js & Express</p>
+        </div>
+    </div>
+</body>
+</html>
