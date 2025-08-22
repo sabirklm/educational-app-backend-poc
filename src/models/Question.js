@@ -21,7 +21,6 @@ const questionSchema = new mongoose.Schema({
         lowercase: true
     }],
 
-
 }, {
     timestamps: true
 });

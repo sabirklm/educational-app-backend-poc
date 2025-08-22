@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/UserController');
+const userController = require('../controllers/user');
+const validateUser = require('../middleware/validation');
 
 // GET /api/users/search - Search users (must be before /:id route)
 router.get('/search', userController.searchUsers);
@@ -12,7 +13,7 @@ router.get('/', userController.getAllUsers);
 router.get('/:id', userController.getUserById);
 
 // POST /api/users - Create new user
-router.post('/', userController.createUser);
+router.post('/', validateUser, userController.createUser);
 
 // PUT /api/users/:id - Update user
 router.put('/:id', userController.updateUser);
