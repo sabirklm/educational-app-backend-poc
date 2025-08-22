@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const { MongoClient } = require('mongodb');
-
+const userRoutes = require('./src/routes/UserRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
@@ -13,6 +13,7 @@ let client;
 
 // middleware to parse JSON
 app.use(express.json());
+app.use('/api/users', userRoutes);
 
 // Connect to MongoDB
 async function connectToMongoDB() {
@@ -56,98 +57,98 @@ app.get('/', (req, res) => {
     });
 });
 
-// Route to check database info
-app.get('/db-info', async (req, res) => {
-    try {
-        if (!db) {
-            return res.status(500).json({ error: 'Database not connected' });
-        }
+// // Route to check database info
+// app.get('/db-info', async (req, res) => {
+//     try {
+//         if (!db) {
+//             return res.status(500).json({ error: 'Database not connected' });
+//         }
 
-        const collections = await db.listCollections().toArray();
+//         const collections = await db.listCollections().toArray();
         
-        res.json({
-            success: true,
-            database: db.databaseName,
-            collections: collections.map(col => col.name),
-            collectionCount: collections.length
-        });
-    } catch (error) {
-        console.error('Database info error:', error);
-        res.status(500).json({ error: 'Failed to get database info' });
-    }
-});
+//         res.json({
+//             success: true,
+//             database: db.databaseName,
+//             collections: collections.map(col => col.name),
+//             collectionCount: collections.length
+//         });
+//     } catch (error) {
+//         console.error('Database info error:', error);
+//         res.status(500).json({ error: 'Failed to get database info' });
+//     }
+// });
 
-// Test database operations
-app.get('/test-db', async (req, res) => {
-    try {
-        if (!db) {
-            return res.status(500).json({ error: 'Database not connected' });
-        }
+// // Test database operations
+// app.get('/test-db', async (req, res) => {
+//     try {
+//         if (!db) {
+//             return res.status(500).json({ error: 'Database not connected' });
+//         }
 
-        const collection = db.collection('test');
-        const result = await collection.insertOne({
-            message: 'Hello from MongoDB!',
-            timestamp: new Date(),
-            database: db.databaseName
-        });
+//         const collection = db.collection('test');
+//         const result = await collection.insertOne({
+//             message: 'Hello from MongoDB!',
+//             timestamp: new Date(),
+//             database: db.databaseName
+//         });
 
-        res.json({
-            success: true,
-            insertedId: result.insertedId,
-            message: 'Document inserted successfully',
-            database: db.databaseName
-        });
-    } catch (error) {
-        console.error('Database operation error:', error);
-        res.status(500).json({ error: 'Database operation failed' });
-    }
-});
+//         res.json({
+//             success: true,
+//             insertedId: result.insertedId,
+//             message: 'Document inserted successfully',
+//             database: db.databaseName
+//         });
+//     } catch (error) {
+//         console.error('Database operation error:', error);
+//         res.status(500).json({ error: 'Database operation failed' });
+//     }
+// });
 
-// Get data from database
-app.get('/data', async (req, res) => {
-    try {
-        if (!db) {
-            return res.status(500).json({ error: 'Database not connected' });
-        }
+// // Get data from database
+// app.get('/data', async (req, res) => {
+//     try {
+//         if (!db) {
+//             return res.status(500).json({ error: 'Database not connected' });
+//         }
 
-        const collection = db.collection('test');
-        const documents = await collection.find({}).limit(10).toArray();
+//         const collection = db.collection('test');
+//         const documents = await collection.find({}).limit(10).toArray();
 
-        res.json({
-            success: true,
-            database: db.databaseName,
-            count: documents.length,
-            data: documents
-        });
-    } catch (error) {
-        console.error('Database fetch error:', error);
-        res.status(500).json({ error: 'Failed to fetch data' });
-    }
-});
+//         res.json({
+//             success: true,
+//             database: db.databaseName,
+//             count: documents.length,
+//             data: documents
+//         });
+//     } catch (error) {
+//         console.error('Database fetch error:', error);
+//         res.status(500).json({ error: 'Failed to fetch data' });
+//     }
+// });
 
-// Create a new document
-app.post('/data', async (req, res) => {
-    try {
-        if (!db) {
-            return res.status(500).json({ error: 'Database not connected' });
-        }
+// // Create a new document
+// app.post('/data', async (req, res) => {
+//     try {
+//         if (!db) {
+//             return res.status(500).json({ error: 'Database not connected' });
+//         }
 
-        const collection = db.collection('test');
-        const result = await collection.insertOne({
-            ...req.body,
-            createdAt: new Date()
-        });
+//         const collection = db.collection('test');
+//         const result = await collection.insertOne({
+//             ...req.body,
+//             createdAt: new Date()
+//         });
 
-        res.json({
-            success: true,
-            insertedId: result.insertedId,
-            message: 'Document created successfully'
-        });
-    } catch (error) {
-        console.error('Create document error:', error);
-        res.status(500).json({ error: 'Failed to create document' });
-    }
-});
+//         res.json({
+//             success: true,
+//             insertedId: result.insertedId,
+//             message: 'Document created successfully'
+//         });
+//     } catch (error) {
+//         console.error('Create document error:', error);
+//         res.status(500).json({ error: 'Failed to create document' });
+//     }
+// });
 
 // Health check route
 app.get('/health', async (req, res) => {
