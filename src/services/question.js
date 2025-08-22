@@ -1,4 +1,4 @@
-const Question = require('../models/question');
+const Question = require('../models/Question');
 
 const questionService = {
   // Get all questions
