@@ -1,4 +1,4 @@
-const questionService = require('../services/QuestionService');
+const questionService = require('../services/question');
 
 const questionController = {
   // GET /api/questions
